@@ -146,6 +146,4 @@ cython_debug/
 .idea/modules.xml
 .idea/sqloj-backend.iml
 .idea/vcs.xml
-sqloj_backend/extension/
-sqloj_backend/module/
-doc/
+
