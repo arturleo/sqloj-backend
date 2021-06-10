@@ -1,17 +1,31 @@
 # SQLOJ-BACKEND
 
-## run
+## Run
+
+### Windows
 
 #### 1. nginx:
-copy nginx.conf to /conf under nginx director
+Copy nginx.conf to /conf under nginx director
 
-    (windows)cd to nginx directory:
+in nginx directory:
+
     $ start nginx
 
-#### 2. wsgi:
+#### mongoDB
+    
+run 
+
+#### 2. wsgi server:
 
     python wsgi.py
 
-## Api Documentation
+### Docker
 
-please refer to http://127.0.0.1:5366/api
+clone and build Dockerfile
+
+## Api Reference
+
+See http://127.0.0.1:5366/api
+
+## Example
+

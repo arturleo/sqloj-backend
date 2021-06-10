@@ -14,6 +14,8 @@ from .teacher import api as teacher_api
 def create_app():
     app = Flask(__name__)
     app.secret_key = 'dev'
+    # enable login required
+    # app.config['LOGIN_DISABLED'] = True
     app.config["MONGO_URI"] = "mongodb://localhost:27017/sqloj_db"
     # initialize extensions
     mongo.init_app(app, uri=app.config["MONGO_URI"])
@@ -61,6 +63,10 @@ def create_app():
                 "assignment_id": "a-066ab87a062b",
                 "question_description": "2",
                 "question_output": "3333333333",
+                "question_answer": "select * from albums;",
+                "question_standard_header": [],
+                "question_standard_output": [],
+                "question_type":"sql",
                 'db_id': "db-21ru2933hui4"
             },
             {
@@ -69,6 +75,10 @@ def create_app():
                 "assignment_id": "a-066ab87a062b",
                 "question_description": "234",
                 "question_output": "3333333333",
+                "question_answer": "select * from albums;",
+                "question_standard_header": [],
+                "question_standard_output": [],
+                "question_type": "sql",
                 'db_id': "db-r9imvrvnq40s"
             }
         ]
@@ -78,55 +88,89 @@ def create_app():
             {
                 "record_id": "r-21ru2933hui4",
                 "question_id": "q-21ru2933hui4",
+                "question_type": "sql",
                 "assignment_id": "a-066ab87a062b",
                 "username": "admin",
                 "submit_time": datetime.fromisoformat('2021-05-04 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-07 00:05:23.283'),
                 "record_code": "code1",
                 "record_status": "AC",
                 "running_time": 100,
-                "latest": True,
-                "output": [123, 123]
+                "record_lack": 0,
+                "record_err": 0,
             },
             {
-                "record_id": "r-21ru2933hui4",
+                "record_id": "r-21ru2923hui4",
                 "question_id": "q-21ru2933hui4",
+                "question_type": "sql",
                 "assignment_id": "a-066ab87a062b",
                 "username": "admin",
                 "submit_time": datetime.fromisoformat('2021-05-04 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-07 00:05:23.283'),
                 "record_code": "code1",
                 "record_status": "AC",
                 "running_time": 100,
-                "latest": False,
-                "output": []
+                "record_lack": 0,
+                "record_err": 0,
             },
             {
-                "record_id": "r-21ru2933hui4",
+                "record_id": "r-21ru2943hui4",
                 "question_id": "q-21ru2933hui4",
+                "question_type": "sql",
                 "assignment_id": "a-066ab87a062b",
                 "username": "123",
                 "submit_time": datetime.fromisoformat('2021-05-04 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-07 00:05:23.283'),
                 "record_code": "code1",
                 "record_status": "AC",
-                "running_time": 100
+                "running_time": 100,
+                "record_lack": 0,
+                "record_err": 0,
             },
             {
                 "record_id": "r-r9imvrvnq40s",
                 "question_id": "q-r9imvrvnq40s",
+                "question_type": "sql",
                 "assignment_id": "a-066ab87a062b",
                 "username": "123",
                 "submit_time": datetime.fromisoformat('2021-05-06 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-07 00:05:23.283'),
                 "record_code": "code2",
                 "record_status": "RUNNING",
-                "running_time": 0
+                "running_time": 0,
+                "record_lack": 0,
+                "record_err": 0,
             }
         ]
-        mongo.db.dbs.insert_many(new_records)
+        mongo.db.records.insert_many(new_records)
+    if mongo.db.record_outputs.count() == 0:
+        new_dbs = [
+            {
+                "question_id": "q-21ru2933hui4",
+                "username": "admin",
+                "record_header":"123",
+                "record_output": "123456",
+                "record_id": "r-21ru2923hui4",
+                "submit_time": datetime.fromisoformat('2021-05-04 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-07 00:05:23.283'),
+            },
+            {
+                "question_id": "q-21ru2933hui4",
+                "username": "123",
+                "record_header": "1111",
+                "record_output": "lalalala",
+                "record_id": "r-21ru2943hui4",
+                "submit_time": datetime.fromisoformat('2021-05-04 00:05:23.283'),
+                "finished_time": datetime.fromisoformat('2021-05-08 00:05:23.283'),
+            },
+        ]
+        mongo.db.record_outputs.insert_many(new_dbs)
     if mongo.db.dbs.count() == 0:
         new_dbs = [
             {
                 "db_id": "db-21ru2933hui4",
                 "db_name": "q1",
-                "db_description":"123",
+                "db_description": "123",
                 "db_filename": "21ru2933hui4",
                 "upload_time": datetime.fromisoformat('2021-05-06 00:05:23.283'),
             },
@@ -145,7 +189,7 @@ def create_app():
     api_blueprint = Blueprint('api', __name__, url_prefix='/api')
     api = Api(api_blueprint)
     app.register_blueprint(api_blueprint)
-    api.add_namespace(login_api, path='/login')
+    api.add_namespace(login_api, path='/')
     api.add_namespace(student_api, path='/student')
     api.add_namespace(teacher_api, path='/teacher')
 
