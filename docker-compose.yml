@@ -1,0 +1,3 @@
+sqloj-backend:
+  build: .
+  command: /usr/bin/supervisord -c /app/supervisord.conf

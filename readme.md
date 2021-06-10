@@ -2,7 +2,7 @@
 
 ## Run
 
-### Windows
+### Run locally(Windows)
 
 #### 1. nginx:
 Copy nginx.conf to /conf under nginx director
@@ -13,7 +13,7 @@ in nginx directory:
 
 #### mongoDB
     
-run 
+run mongodb at port 27017
 
 #### 2. wsgi server:
 
@@ -21,11 +21,14 @@ run
 
 ### Docker
 
-clone and build Dockerfile
+1.clone this repository
+
+2.build Dockerfile
 
 ## Api Reference
 
-See http://127.0.0.1:5366/api
+See http://127.0.0.1:12333/api
 
 ## Example
 
+//todo
